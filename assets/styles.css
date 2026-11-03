@@ -1,0 +1,319 @@
+@font-face {
+  font-family: 'BlackNebula';
+  src: url('Font/BlackNebula.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Pumpkin Pie Lattes';
+  src: url('Font/PumpkinPieLattes.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Anonymous Pro', Courier, monospace;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.911);
+  background-color: black;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+a {
+  text-decoration: none;
+  color: #a9c0ff;
+}
+
+nav {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5rem 5rem 0rem 5rem;
+  gap: 2rem;
+  background-color: rgba(0, 12, 46, 0.349);
+}
+
+.nav-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+nav a p {
+  display: block;
+  min-width: 9rem;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  border: solid 1px #aaa;
+  text-align: center;
+  text-decoration: none;
+  color: rgb(190, 190, 190);
+}
+
+nav a img {
+  display: block;
+  max-height: 13em;
+  padding: 2rem 3rem 1rem 3rem;
+  border-radius: 0.2rem;
+}
+
+nav a[aria-current='page'] p {
+  color: rgb(255, 255, 255);
+  background-color: #a9c0ff38;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 8rem 4rem 8rem;
+}
+
+#main-space {
+  opacity: 1;
+}
+
+#main-space.fade-out {
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out, filter 0.25s ease-in-out;
+  filter: blur(5px); /* Optional: nice cinematic arcade blur effect */
+}
+
+nav:not(.hide-element) + main {
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
+
+h1 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Hide elements from being rendered */
+.hide-element {
+  display: none !important;
+}
+
+/* Selection and Menus */
+.menu div {
+  margin: 0.8rem 1.2rem;
+  padding: 0.5rem 0.8rem;
+  background-color: rgba(255, 255, 255, 0.01);
+  transition: all 0.1s ease;
+}
+
+.menu div.focus {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #9ebbe6;
+  border: 1px solid aqua;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+}
+
+.focus-cursor {
+  font-weight: bolder;
+  color: aqua;
+}
+
+/* Animation */
+.cursor-blink {
+  animation: blinking 1s steps(2, start) infinite;
+}
+
+@keyframes blinking {
+  to {
+    visibility: hidden;
+  }
+}
+
+.cutscene-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: center;
+}
+
+.cutscene-text {
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(20px);
+}
+
+/* State A: The text phrase has arrived and is active */
+.cutscene-text.active-step {
+  opacity: 1;
+  filter: blur(0px);
+  transform: translateY(0);
+  color: aqua;
+  text-shadow: 0 0 10px rgba(0, 234, 255, 0.4);
+}
+
+/* State B: The text is shifting up and blurring out of perspective */
+.cutscene-text.past-step {
+  opacity: 0.2;
+  filter: blur(4px);
+  transform: translateY(-25px);
+  color: #ffffff;
+}
+
+.cutscene-text.past-step-name {
+  opacity: 0.3;
+  margin: 0;
+  filter: blur(3px);
+  transform: translateY(-5px);
+  color: rgb(107, 136, 214);
+}
+
+/* State C: Text isn't ready to show up on screen yet */
+.cutscene-text.hidden-step {
+  display: none;
+}
+
+/* State D: Input Text Box */
+.interactive-prompt-block {
+  opacity: 0;
+  transform: scale(0.96) translateY(10px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.interactive-prompt-block.fade-in-prompt {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.interactive-prompt-block.hidden-prompt {
+  display: none;
+}
+
+/* State E: Text Input Entry */
+.focus-input-box {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  font-size: 1.8rem;
+  border: 1px solid aqua;
+  border-radius: 0.1rem;
+  background-color: rgba(0, 234, 255, 0.05);
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin: 1rem 0;
+  box-shadow: 0 0 15px rgba(0, 234, 255, 0.15);
+}
+
+.helper-text {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Cards Collection Grid Layout */
+.cards-screen-container {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  max-width: 75vw;
+  height: 80vh; /* Fixed height to enable internal scrolling */
+  margin: 0 auto;
+}
+
+.cards-list-column {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding-right: 1.5rem;
+}
+
+.cards-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-right: 0.5rem;
+}
+
+/* Custom Arcade Scrollbar */
+.cards-list::-webkit-scrollbar { width: 4px; }
+.cards-list::-webkit-scrollbar-track { background: rgba(0, 12, 46, 0.5); }
+.cards-list::-webkit-scrollbar-thumb { background: aqua; border-radius: 2px; }
+
+.card-list-item {
+  padding: 0.6rem 1rem;
+  border: 1px solid transparent;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 2px;
+  transition: all 0.1s ease;
+  font-size: 1.1rem;
+}
+
+.card-list-item.card-unlocked { color: #ffffff; }
+.card-list-item.card-locked { color: rgba(255, 255, 255, 0.25); }
+
+/* The focus state mirrors your main menu style */
+.card-list-item.focus {
+  border-color: aqua;
+  background-color: rgba(0, 234, 255, 0.05);
+  color: aqua;
+  box-shadow: 0 0 10px rgba(0, 234, 255, 0.15);
+}
+
+.card-id-text { font-family: monospace; font-size: 0.8rem; opacity: 0.6; margin-right: 0.5rem; }
+
+/* Right Column: The Inspector */
+.card-inspect-column {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+}
+
+.inspect-panel {
+  border: 1px solid rgba(0, 234, 255, 0.3);
+  background: rgba(0, 12, 46, 0.5);
+  padding: 2rem;
+  border-radius: 4px;
+  height: 100%;
+  box-shadow: inset 0 0 20px rgba(0, 12, 46, 0.8);
+}
+
+.inspect-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid aqua;
+  color: aqua;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.inspect-divider {
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 1.5rem 0;
+}
